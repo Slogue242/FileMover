@@ -9,12 +9,16 @@ source_hold = []
 def source_folder():
     source_dest = filedialog.askdirectory()
     source_hold.append(str(source_dest))
+    source_entry.delete(0, 'end')
+    source_entry.insert(INSERT, str(source_dest))
 
 final_hold = []
 
 def dest_folder():
     final_dest = filedialog.askdirectory()
     final_hold.append(str(final_dest))
+    dest_entry.delete(0, 'end')
+    dest_entry.insert(INSERT, str(final_dest))
 
 biggest = ("", -1)
 
@@ -52,6 +56,8 @@ def main():
     for item in biggest_item:
        shutil.move(item, dest_but)
 
+def exit():
+    pass
 
 root = Tk()
 
@@ -60,12 +66,21 @@ root.geometry("500x300")
 root.resizable(width=True, height=True)
 
 source_folder = Button(root, text="Source Folder", width=15, command=source_folder)
-source_folder.pack(side="left")
+source_folder.grid(row=0)
 
 dest_loca = Button(root, text="Destination Folder", width=15, command=dest_folder)
-dest_loca.pack(side="left")
+dest_loca.grid(row=1)
 
 run_button = Button(root, text="Move Now", width=15, command=main)
-run_button.pack(side="left")
+run_button.grid(row=2)
+
+source_entry = Entry(root)
+source_entry.grid(row=0, column=1, columnspan=2)
+
+dest_entry = Entry(root)
+dest_entry.grid(row=1, column=1, columnspan=2)
+
+exit_button = Button(root, text="Exit", width=15, command=exit)
+exit_button.grid(row=2, column=3)
 
 root.mainloop()
