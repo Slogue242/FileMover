@@ -57,7 +57,7 @@ def main():
        shutil.move(item, dest_but)
 
 def exit():
-    pass
+    exit()
 
 root = Tk()
 
