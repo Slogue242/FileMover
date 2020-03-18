@@ -56,8 +56,9 @@ def main():
     for item in biggest_item:
        shutil.move(item, dest_but)
 
-def exit():
-    exit()
+    delete_get = delete_var.get()
+    if delete_get == 1:
+        pass
 
 root = Tk()
 
@@ -80,7 +81,12 @@ source_entry.grid(row=0, column=1, columnspan=2)
 dest_entry = Entry(root)
 dest_entry.grid(row=1, column=1, columnspan=2)
 
-exit_button = Button(root, text="Exit", width=15, command=exit)
+delete_var = IntVar()
+
+chk = Checkbutton(root,text='Delete Folders After Move', variable=delete_var)
+chk.grid(row=0, column=3)
+
+exit_button = Button(root, text="Exit", width=15, command=root.destroy)
 exit_button.grid(row=2, column=3)
 
 root.mainloop()
