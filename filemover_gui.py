@@ -53,11 +53,20 @@ def main():
         biggest_item.append(str(biggest[0]))
         biggest = ("", -1)
 
+    print("##10")
     for item in biggest_item:
        shutil.move(item, dest_but)
-
+    print("##20")
     delete_get = delete_var.get()
+    print("##30")
     if delete_get == 1:
+        try:
+            for item in dir_list:
+                shutil.rmtree(item)
+        except Exception as e:
+            print(e)
+            pass
+    else:
         pass
 
 root = Tk()
