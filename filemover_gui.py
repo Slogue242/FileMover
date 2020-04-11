@@ -13,6 +13,13 @@ def tv_folder():
     tv_folder_entry.delete(0, 'end')
     tv_folder_entry.insert(INSERT, str(tv_dest))
 
+def tv_folder_check():
+    if not tv_hold:
+        main()
+    else:
+        main()
+        mover()
+
 source_hold = []
 
 #This lets the user select a folder they want to move files out of and then appends this to the empty list above called source_hold
@@ -135,7 +142,7 @@ dest_loca = Button(root, text="Destination Folder", width=15, command=dest_folde
 dest_loca.grid(row=2)
 
 #Creates a button that allows the user to run the program once they have selected both destination and source folder.
-run_button = Button(root, text="Move Now", width=15, command=lambda:[main(), mover()])
+run_button = Button(root, text="Move Now", width=15, command=tv_folder_check)
 run_button.grid(row=3)
 
 tv_folder_entry = Entry(root)
