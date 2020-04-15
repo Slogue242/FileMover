@@ -1,3 +1,4 @@
+import re
 import os
 import sys
 import shutil
@@ -88,6 +89,7 @@ def mover():
     punc_list = "'"
 
     name_path = {}
+    tv_new_dict = {}
 
     root = tv_hold[0]
 
@@ -97,13 +99,16 @@ def mover():
             full_path = root+"/"+item
             if item not in name_path.keys():
                 name_path[item] = full_path
-
+            else:
+                pass
     #Checks key in name_path dict has a ' in the dict key, this then deletes that key and replaces it with a key without the '
     for old_key in name_path:
+        print(old_key)
         if punc_list in old_key:
             new_key = old_key.replace(punc_list, "")
-            name_path[new_key] = name_path.pop(old_key)
-
+            tv_new_dict[new_key] = name_path[old_key]
+        else:
+            tv_new_dict[old_key] = name_path[old_key]
 
     file_name = []
 
@@ -112,15 +117,44 @@ def mover():
         for file in files:
             file_name.append(file)
 
+    for item in file_name:
+        lowering = item.lower()
+        finding_season = re.findall(r's\d+', lowering)
+
+
+    if not finding_season:
+        pass
+    elif finding_season:
+        for x in finding_season:
+            no_letter = re.findall(r'\d+', x)
+            for zero_letter in no_letter:
+                if zero_letter[0] == "0":
+                    print("reached1")
+                    without_zero = f"{zero_letter[1:]}"
+                else:
+                    print("reached2")
+                    without_zero = zero_letter
+    else:
+        pass
+
     #Checks if the file names have a full stop in them and then deletes it.
     #This is to help with checking against the dict keys.
     for item in file_name:
         if "." in item:
             new_item = item.replace(".", " ")
-            for x in name_path:
+            for x in tv_new_dict:
                 if x.lower() in new_item.lower():
-                    shutil.move(f"{source_hold[0]}/{item}", f"{name_path[x]}/{item}")
-                    print("Moved")
+                    tv_show = tv_new_dict[x]
+                    tv_season_list = os.listdir(tv_show)
+                    for item2 in tv_season_list:
+                        if without_zero in item2:
+                            print("Match")
+                            shutil.move(f"{source_hold[0]}/{item}", f"{tv_new_dict[x]}/{item2}/{item}")
+                        else:
+                            print("No Match")
+                else:
+                    pass
+
 #This is for starting tkinter GUI
 root = Tk()
 
